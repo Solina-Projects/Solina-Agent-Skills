@@ -26,6 +26,7 @@ All skills use the Agent Skills format: a directory containing a `SKILL.md` with
 - `whatsapp-integration` — WhatsApp Business Platform and approved messaging workflows.
 - `instagram-integration` — Instagram professional-account APIs, publishing and messaging where supported.
 - `messaging-social-operations` — safe cross-platform messaging/social workflows and human approval gates.
+- `find-skills` — discovers, evaluates and installs agent skills from the open skills ecosystem.
 
 ## Installation and use
 
