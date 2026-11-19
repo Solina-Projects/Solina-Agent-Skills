@@ -1,5 +1,9 @@
 # Solina Agent Skills
 
+<p align="center">
+  <img src="assets/icon-512.png" alt="Solina Agent Skills icon" width="120" height="120">
+</p>
+
 A practical, security-first skill collection for Android engineering, custom ROMs, device operations, software development, design, GitHub, Google services, browsers, messaging and social platforms.
 
 ## Skill layout
