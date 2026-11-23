@@ -1,0 +1,5 @@
+name: "solina-android"
+title: "Solina Android Development"
+description: "Build and test an Android music and video player in chat with Kotlin and Jetpack Compose and push it to GitHub for the user to test as an APK."
+category: "Work and knowledge"
+include_in_prompt: true

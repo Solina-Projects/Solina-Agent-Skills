@@ -1,0 +1,5 @@
+name: "lunaris-rom-build"
+title: "Lunaris Custom ROM Build"
+description: "Build and port Lunaris-AOSP for alioth (POCO F3) on hermes-server with repo sync, device trees, lunch and bacon, and diagnose build failures."
+category: "Work and knowledge"
+include_in_prompt: true

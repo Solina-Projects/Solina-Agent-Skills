@@ -1,0 +1,259 @@
+---
+name: expo-router
+description: Navigation and routing for Expo Router. Covers file-based routes, groups and dynamic routes, folder organization, Link with previews and context menus, native Stack, page titles, modals and form sheets, NativeTabs, headers and toolbars, and header search bars.
+license: MIT
+---
+
+# Expo Router Navigation
+
+Navigation and routing for Expo Router apps. For screen styling, colors, controls, media, and visual effects, use the `expo-native-ui` skill; for motion and gestures, use `expo-animation`.
+
+<!-- MUSE-ADAPT -->
+
+## Muse adaptation — read first
+
+This skill runs inside Muse's own environment, for Nasser. Where the original instructions below conflict with these points, these points win.
+
+- Host: Linux VM (4 CPU, ~7 GB RAM, x86_64), no GPU. Toolchains live under the home directory only; never rely on system installs. For npm, always set npm_config_cache=/tmp/npm-cache.
+- The user (Nasser) is Persian-speaking and phone-only; he has no computer. Deliverables reach him as files in this chat. Explain everything in simple Persian and translate every English label - his English is effectively zero.
+- Register: two-way, comfortable, street-style, blunt and honest. No formalities.
+- Never ask design-detail questions. Decide, build, then report shortly.
+- For Nasser's own apps (Solina-Player, Solina-Launcher), follow the design decisions already recorded in memory (Material 3 Expressive, RTL Persian, Vazirmatn) and never copy another app's branding.
+- UI copy: Persian first, Western (English) digits only, no em dashes in UI copy.
+- Apply quality gates silently. Never paste internal gate or lint reports to the user; report outcomes in a few lines.
+- Secrets never go into files, memory or chat output. Publishing anything publicly needs his explicit approval first.
+- The original skill may name Claude Code tools (Read, Write, Edit, Glob, Grep, Bash). Use Muse's own tools instead (file read/write/edit, shell, browser). Use the browser tools for live pages and real-site screenshots.
+- Video generation on this host is limited; never promise video output that a code-only path cannot deliver.
+
+Skill-specific note: No Expo or EAS account is connected yet; EAS build, submit and update flows need the user's sign-in first, arranged with Nasser when a real project starts. All work happens on this VM (Nasser has no computer); keep project files under ~/workspace.
+
+
+## References
+
+Consult these resources as needed:
+
+```
+references/
+  route-structure.md     Route conventions, dynamic routes, groups, folder organization
+  tabs.md                NativeTabs, migration from JS tabs, iOS 26 features
+  toolbar-and-headers.md Stack headers and toolbar buttons, menus, search (iOS only)
+  form-sheet.md          Form sheets in expo-router: configuration, footers and background interaction.
+  search.md              Search bar with headers, useSearch hook, filtering patterns
+  zoom-transitions.md    Apple Zoom: fluid zoom transitions with Link.AppleZoom (iOS 18+)
+```
+
+## Code Style
+
+- Always use kebab-case for file names, e.g. `comment-card.tsx`
+- Always remove old route files when moving or restructuring navigation
+- Never use special characters in file names
+- Configure tsconfig.json with path aliases, and prefer aliases over relative imports for refactors.
+
+## Routes
+
+See `./references/route-structure.md` for detailed route conventions.
+
+- Routes belong in the `app` directory.
+- Never co-locate components, types, or utilities in the app directory. This is an anti-pattern.
+- Ensure the app always has a route that matches "/", it may be inside a group route.
+
+## Library Preferences
+
+- `Color` from `expo-router` for native semantic colors, not raw `PlatformColor` (type-safe, auto-adapts to light/dark). See `expo-native-ui` for the full color palette pattern.
+- In SDK 56+, never import from `@react-navigation/*` directly — use `expo-router/react-navigation` instead (covers `@react-navigation/native`, `/core`, `/elements`, `/routers`)
+
+## Behavior
+
+- Prefer `Stack.SearchBar` to add a search bar to a screen
+
+# Navigation
+
+## Link
+
+Use `<Link href="/path" />` from 'expo-router' for navigation between routes.
+
+```tsx
+import { Link } from 'expo-router';
+
+// Basic link
+<Link href="/path" />
+
+// Wrapping custom components
+<Link href="/path" asChild>
+  <Pressable>...</Pressable>
+</Link>
+```
+
+Whenever possible, include a `<Link.Preview>` to follow iOS conventions. Add context menus and previews frequently to enhance navigation.
+
+## Stack
+
+- ALWAYS use `_layout.tsx` files to define stacks
+- Use Stack from 'expo-router/stack' for native navigation stacks
+
+### Page Title
+
+Set the page title with `Stack.Title`:
+
+```tsx
+<Stack.Title>Home</Stack.Title>
+```
+
+## Context Menus
+
+Add long press context menus to Link components:
+
+```tsx
+import { Link } from "expo-router";
+
+<Link href="/settings" asChild>
+  <Link.Trigger>
+    <Pressable>
+      <Card />
+    </Pressable>
+  </Link.Trigger>
+  <Link.Menu>
+    <Link.MenuAction
+      title="Share"
+      icon="square.and.arrow.up"
+      onPress={handleSharePress}
+    />
+    <Link.MenuAction
+      title="Block"
+      icon="nosign"
+      destructive
+      onPress={handleBlockPress}
+    />
+    <Link.Menu title="More" icon="ellipsis">
+      <Link.MenuAction title="Copy" icon="doc.on.doc" onPress={() => {}} />
+      <Link.MenuAction
+        title="Delete"
+        icon="trash"
+        destructive
+        onPress={() => {}}
+      />
+    </Link.Menu>
+  </Link.Menu>
+</Link>;
+```
+
+## Link Previews
+
+Use link previews frequently to enhance navigation:
+
+```tsx
+<Link href="/settings">
+  <Link.Trigger>
+    <Pressable>
+      <Card />
+    </Pressable>
+  </Link.Trigger>
+  <Link.Preview />
+</Link>
+```
+
+Link preview can be used with context menus.
+
+## Modal
+
+Present a screen as a modal:
+
+```tsx
+<Stack.Screen name="modal" options={{ presentation: "modal" }} />
+```
+
+Prefer this to building a custom modal component.
+
+## Sheet
+
+Present a screen as a dynamic form sheet:
+
+```tsx
+<Stack.Screen
+  name="sheet"
+  options={{
+    presentation: "formSheet",
+    sheetGrabberVisible: true,
+    sheetAllowedDetents: [0.5, 1.0],
+    contentStyle: { backgroundColor: "transparent" },
+  }}
+/>
+```
+
+- Using `contentStyle: { backgroundColor: "transparent" }` makes the background liquid glass on iOS 26+.
+
+## Common route structure
+
+A standard app layout with tabs and stacks inside each tab:
+
+```
+app/
+  _layout.tsx — <NativeTabs />
+  (index,search)/
+    _layout.tsx — <Stack />
+    index.tsx — Main list
+    search.tsx — Search view
+```
+
+```tsx
+// app/_layout.tsx
+import { NativeTabs } from "expo-router/unstable-native-tabs";
+import { ThemeProvider, DarkTheme, DefaultTheme } from "expo-router/react-navigation";
+import { useColorScheme } from "react-native";
+
+export default function Layout() {
+  const colorScheme = useColorScheme();
+  return (
+    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+      <NativeTabs>
+        <NativeTabs.Trigger name="(index)">
+          <NativeTabs.Trigger.Icon sf="list.dash" md="list" />
+          <NativeTabs.Trigger.Label>Items</NativeTabs.Trigger.Label>
+        </NativeTabs.Trigger>
+        <NativeTabs.Trigger name="(search)" role="search" />
+      </NativeTabs>
+    </ThemeProvider>
+  );
+}
+```
+
+Create a shared group route so both tabs can push common screens:
+
+```tsx
+// app/(index,search)/_layout.tsx
+import { Stack } from "expo-router/stack";
+import { colors } from "@/theme/colors";
+
+export default function Layout({ segment }) {
+  const screen = segment.match(/\((.*)\)/)?.[1]!;
+  const titles: Record<string, string> = { index: "Items", search: "Search" };
+
+  return (
+    <Stack
+      screenOptions={{
+        headerTransparent: true,
+        headerShadowVisible: false,
+        headerLargeTitleShadowVisible: false,
+        headerLargeStyle: { backgroundColor: "transparent" },
+        headerTitleStyle: { color: colors.label },
+        headerLargeTitleEnabled: true,
+        headerBlurEffect: "none",
+        headerBackButtonDisplayMode: "minimal",
+      }}
+    >
+      <Stack.Screen name={screen} options={{ title: titles[screen] }} />
+      <Stack.Screen name="i/[id]" options={{ headerLargeTitleEnabled: false }} />
+    </Stack>
+  );
+}
+```
+
+`headerLargeTitleEnabled` is the SDK 56+ option name; older SDKs use `headerLargeTitle`, which is deprecated upstream.
+
+## Submitting Feedback
+If you encounter errors, misleading or outdated information in this skill, report it so Expo can improve:
+```bash
+npx --yes @expo/agent-cli@latest feedback --category skills --subject "expo-router" "<actionable feedback>"
+```
+Only submit when you have something specific and actionable to report. Include as much relevant context as possible.
+If an agent repeatedly fails at an Expo task or the user has to step in, submit a brief report of the task, expected result, and what went wrong using `--category evals` and the relevant Expo package or command as `--subject`.

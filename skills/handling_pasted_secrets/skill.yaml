@@ -1,0 +1,23 @@
+name: handling_pasted_secrets
+title: Handling Pasted Secrets
+description: Respond once and safely when the user pastes passwords, tokens or other secrets in chat.
+category: Privacy
+include_in_prompt: true
+skill_improvement:
+  managed: true
+  status: active
+  evidence_handles:
+  - message:assistant-msg-43d17575
+  - message:assistant-msg-6479fcfb
+  - message:assistant-msg-d9005851
+  - message:assistant-msg-4de61746
+  - message:assistant-msg-82d163c1
+  measurement:
+    proxy_metric_id: objective_success_rate
+    success_criterion: No repeat of the same secret categorisation more than twice in one conversation in the next 14 days, and no secret value is repeated or re-sent after the first safe reply
+    window_days: 14
+  needs_review: false
+  rationale: The window shows the longest repeated failure was the vault and secrets loop on 2026-11-06 from about 06:35 to 07:06, when the assistant correctly refused to repeat or send secrets but then repeated the same short file and line categorisation about 15 to 20 times while the user grew frustrated and sent the vault master password again twice. The existing custom-connector-setup skill only says never to ask the user to paste a key in chat and never to store a secret, and no searched skill covers a user-initiated paste, a single authoritative reply, or de-escalation. This new skill teaches exactly that one reply, one rotation offer, and recording only locations, so the next paste does not restart the loop.
+  review_after: 2026-11-20T13:04:06.843041+00:00
+  reviewed_at: 2026-11-06T13:04:06.843041+00:00
+  run_id: sirun_0e634959b86a4b73a42e3f1b23903d94

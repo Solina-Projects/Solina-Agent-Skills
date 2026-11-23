@@ -1,0 +1,20 @@
+name: smali_verifyerror_repair
+title: Smali VerifyError Repair
+description: Repair an ART VerifyError in a smali-patched Android app by placing the type correction before every dispatch branch that reads the register.
+category: Work and knowledge
+include_in_prompt: false
+skill_improvement:
+  managed: true
+  status: active
+  evidence_handles:
+  - message:064c5e01
+  - message:93dfa62c
+  measurement:
+    proxy_metric_id: objective_success_rate
+    success_criterion: No repeat VerifyError from a smali fix placed after a dispatch check in the next 30 days, and each smali fix is verified by a baksmali round-trip plus a device launch check before it is called fixed
+    window_days: 30
+  rationale: 'The CF-Bridge app crashed twice on 2026-11-22 with the same VerifyError class in handleBridgeAction, where register v0 held Object instead of Uri. The first fix (commit eee5bef, CI run 44978357482, device-confirmed about 06:50) re-parsed the Uri inside one branch, but the second crash (message 93dfa62c, 05:23) happened because that re-parse sat after the bridge://llm dispatch check, so the fullscreen and home branches still received v0 as a Button. The second fix (commit 1a315e0, CI run 44989381621) moved the re-parse to the top of the dispatch so it dominates every downstream branch. No searched skill codifies this placement rule: android-engineering, android-testing and ci-cd-android say nothing about VerifyError, and apk-run (rev 1455847a, not loop-managed) mentions only the smali assemble and baksmali round-trip. The lesson currently lives only in MEMORY.md, which is not a discoverable skill, so the same placement mistake can recur on the next smali patch. This new skill teaches the dominance rule and the local verification that proves it.'
+  needs_review: false
+  review_after: 2026-12-22T13:18:05.312596+00:00
+  reviewed_at: 2026-11-22T13:18:05.312596+00:00
+  run_id: sirun_0c01de1c692e4bbbab5d3891c1587576
