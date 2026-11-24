@@ -156,6 +156,15 @@ If a task is L or larger, it should be broken into smaller tasks. An agent perfo
 - It touches two or more independent subsystems (e.g., auth and billing)
 - You find yourself writing "and" in the task title (a sign it is two tasks)
 
+## Superpowers plan discipline (from obra/superpowers writing-plans)
+
+- **Task right-sizing:** a task is the smallest unit that carries its own test cycle and is worth a fresh reviewer's gate. Fold setup, configuration, scaffolding and documentation into the task whose deliverable needs them; split only where a reviewer could meaningfully reject one task while approving its neighbour.
+- **Step granularity:** each step is one action with a checkable result — write the failing test, run it and watch it fail, implement the minimal code, run the test and watch it pass, commit. A step is done when the implementer can write exactly one reasonable thing from it.
+- **Interfaces between tasks:** every task states what it consumes from earlier tasks (exact signatures) and what it produces for later ones (exact function names, parameter and return types). A task's implementer sees only their own task; the Interfaces block is how they learn the names and types neighbouring tasks use.
+- **Plan header:** every plan starts with Goal (one sentence), Architecture (2-3 sentences), Tech Stack, and the spec/design it implements — then Global Constraints (the spec's project-wide requirements, one line each, with exact values) and a Review Focus list (the five input classes or failure modes the spec implies but no task's tests exercise, most likely first — each gets its test added to the task that owns the code).
+- **Self-review before handoff:** after writing the plan, check it against the spec — spec coverage (every requirement has a task), step scan (every step lets the implementer write exactly one reasonable thing; a line that decides nothing is a gap, a body the signature and tests already determine is a transcript), type consistency (names and signatures match across tasks), Review Focus coverage, proportion (a plan several times longer than the spec is a transcript of the program, not a plan). Fix what you find inline.
+- **Execution handoff:** save the plan, link it for Nasser to read, and ask him to review it and pick an execution method: subagent-driven (a fresh subagent per task, review after each — most thorough) or inline (you implement every task in this session, one fresh review of the whole branch at the end — cheapest and fastest). His standing pattern is one blanket approval and then run to the end; the choice is his, the plan is the record either way. Execution uses `superpowers-subagent-driven-development` (subagent-driven) or `incremental-implementation` (inline).
+
 ## Output Files
 
 - **Plan document:** Save the implementation plan to `tasks/plan.md`. This is always a markdown file — design decisions, risks, and open questions don't map cleanly onto individual tracker issues.

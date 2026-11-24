@@ -1,3 +1,8 @@
+---
+name: security_stop_approval
+description: "Stop at once when a security check or tool block stops a step: leave it undone, name the warning and the exact alternate path, and wait for the user's decision."
+---
+
 # Security Stop Approval
 
 ## Stop at the block

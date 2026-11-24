@@ -1,3 +1,8 @@
+---
+name: kitesurf
+description: Use Cloudflare's Kitesurf cloud browser as a fallback when Muse's own browser cannot read a site — it fetches the page, runs JavaScript, renders it, and speaks the Chrome DevTools Protocol.
+---
+
 # Kitesurf — Cloudflare open-source cloud browser (agent fallback)
 
 ## What it is

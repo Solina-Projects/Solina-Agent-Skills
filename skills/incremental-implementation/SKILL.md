@@ -196,6 +196,17 @@ Each increment should be independently revertable:
 - Database migrations should have corresponding rollback migrations
 - Avoid deleting something in one commit and replacing it in the same commit — separate them
 
+## Ledger, rulings, and the completion contract (from obra/superpowers executing-plans)
+
+When executing a written plan inline (no subagent per task), memory and todos do not survive compaction. Track progress in a ledger file next to the plan (e.g. `tasks/progress.md`), not only in todos:
+
+- The ledger's first line names the plan: `# SDD ledger — plan: <plan file path>`. A task with a `Task <N>: complete` line is DONE — do not redo it; resume at the first task without one. After compaction, trust the ledger and the commit log over your own recollection.
+- **Rulings, not stalls.** Conflicts, ambiguities, plan defects — decide them. The spec is the binding authority, the plan is its argument, your judgment settles what neither answers. Record every decision in the ledger as `Ruling: <what you decided> — <why> — <what it costs if wrong>`, and keep going. Deviating from the plan without a ledgered ruling is a decision made in secret.
+- **Only four things stop you:** an irreversible or destructive operation; a security-sensitive action; a side effect outside this work that norms say you ask about first (a merge, a push to a shared branch, a publish); a plan so broken that every path forward is a guess. For those, stop and ask. Never pause between tasks to ask "should I continue?" — inline execution was chosen to spend less, not to answer progress prompts.
+- **Completion contract (per task):** before a task's ledger line, all of these are true with evidence from this session — every test the task names exists and ran, and you read the output; the final test run for the task passed; every Expected line was compared against real output; every deviation from the plan has a Ruling line. If any item is missing, the task is not complete.
+- **Final review:** when all tasks are complete, a fresh reviewer (a subagent, or your own separate pass if no subagent is available — and say so plainly, a self-review is weaker) reviews the whole branch against the plan and spec. Re-grade findings by effect on a real person using the software, not by whether the spec names the input. Critical and Important findings get ONE fix pass, each fix verified by TDD (test fails first, then passes, suite green). Minor findings go to the ledger as deferred, and to the final report under "Deferred minors". Rulings go to the final report under "Rulings I made", each with what it costs if wrong.
+- **No worktrees for this user:** upstream assumes git worktrees for isolation. This user's Solina-Files work goes only via the GitHub API, never a local clone — execute the same discipline through the API/`gh` (branch per plan, commits via the API), and keep the ledger in the workspace.
+
 ## Working with Agents
 
 When directing an agent to implement incrementally:

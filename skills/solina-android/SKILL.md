@@ -1,3 +1,8 @@
+---
+name: solina-android
+description: "Build Solina Android apps with Kotlin, Jetpack Compose and Media3: Material 3 Expressive, RTL Persian with Vazirmatn, album-art colours, and wave/shimmer loading indicators."
+---
+
 # Solina Android Development
 
 ## Settle the stack and design first

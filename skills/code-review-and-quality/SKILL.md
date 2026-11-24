@@ -222,6 +222,27 @@ Check the author's verification story:
 - Is there a before/after comparison?
 ```
 
+## Superpowers review discipline (from obra/superpowers requesting/receiving-code-review)
+
+### Requesting a review
+
+- **Mandatory:** after each task in subagent-driven work, after completing a major feature, and before merging to main. Never skip a review because "it's simple".
+- **Dispatch a fresh reviewer, don't review your own diff inline.** The reviewer gets precisely crafted context — the diff as a file, the task brief, the plan/spec — never your session's history. Reviewing inline burns the context you need to keep driving the work; the diff and the evaluation live in the reviewer's context, and only the findings come back to you.
+- **Reviewer inputs:** the brief, the report, and the review package (diff), plus the plan's Global Constraints copied verbatim (exact values, exact formats, stated relationships between components). Don't add open-ended directives ("check all uses") without a concrete, task-specific reason, and don't ask the reviewer to re-run tests the implementer already ran. Never pre-judge findings — if your prompt says "do not flag", "don't treat X as a defect", or "at most Minor", stop: you are pre-judging.
+- **Act on feedback:** fix Critical issues immediately, fix Important issues before proceeding, note Minor issues for later. Push back if the reviewer is wrong — with technical reasoning, not dismissal.
+
+### Receiving review feedback
+
+Verify before implementing; ask before assuming; technical correctness over social comfort.
+
+- **Pattern:** read the complete feedback without reacting → restate the requirement in your own words (or ask) → verify it against the codebase → evaluate whether it is technically sound for THIS codebase → respond with a technical acknowledgment or reasoned pushback → implement one item at a time, testing each.
+- **No performative agreement.** Never "You're absolutely right!", "Great point!", or "Let me implement that now" before verification. Restate the requirement, ask, push back with reasoning, or just start working — actions over words. When feedback IS correct, say "Fixed. [what changed]" or just fix it and show it in the code. No thanks.
+- **Clarify everything unclear FIRST.** If you understand items 1, 2, 3 and 6 but not 4 and 5, stop: "I understand items 1, 2, 3, 6. Need clarification on 4 and 5 before implementing." Never implement the clear items and ask about the rest later — items may be related.
+- **YAGNI check for "professional" features.** If a reviewer suggests implementing something "properly", grep the codebase for actual usage. If unused: "This isn't called anywhere. Remove it (YAGNI)?"
+- **Push back when:** the suggestion breaks existing functionality, the reviewer lacks full context, it violates YAGNI, it is technically incorrect for this stack, legacy/compatibility reasons exist, or it conflicts with Nasser's prior architectural decisions (then stop and discuss with him first). Push back with technical reasoning and references to working tests/code — never defensively. If you pushed back and were wrong, say so factually ("You were right — I checked X and it does Y. Implementing now.") and move on.
+- **Implementation order:** blocking issues first, then simple fixes, then complex fixes. Test each fix individually; verify no regressions.
+- **GitHub thread replies:** reply in the comment thread (`gh api repos/{owner}/{repo}/pulls/{pr}/comments/{id}/replies`), not as a top-level PR comment.
+
 ## Multi-Model Review Pattern
 
 Use different models for different review perspectives:

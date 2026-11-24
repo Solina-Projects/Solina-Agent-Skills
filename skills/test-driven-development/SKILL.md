@@ -37,6 +37,19 @@ Write a failing test before writing the code that makes it pass. For bug fixes, 
 
 **Related:** For browser-based changes, combine TDD with runtime verification using Chrome DevTools MCP — see the Browser Testing section below.
 
+## The Iron Law (from obra/superpowers test-driven-development)
+
+```
+NO PRODUCTION CODE WITHOUT A FAILING TEST FIRST
+```
+
+Code written before the test? Delete it and start over. No exceptions: don't keep it as "reference", don't "adapt" it while writing tests, don't look at it. Delete means delete. Implement fresh from tests.
+
+- **Verify RED:** run the test and watch it fail. Confirm it fails for the expected reason (feature missing), not a typo. A test that passes immediately is testing existing behaviour — fix the test.
+- **Verify GREEN:** run the test and watch it pass — then run the project's FULL suite, not just your file. A green run of the test you wrote is not a green suite. Any failure that run shows, including one you didn't cause, goes in your report by name; a red test you watched scroll past and didn't mention is a report falsified by omission.
+- **Regression tests:** a regression test is only proven by the red-green cycle — write it, run it (pass), revert the fix, run it (it MUST FAIL), restore the fix, run it (pass).
+- **Android note:** a green JVM/CI run is not proof on the device — a JVM test cannot reproduce Android-only bugs (proven by the Refuge Aegis-import crash: CI green, broken 100% on the POCO F3). The user tests on his phone; never call an Android fix confirmed until he reports it working on the device.
+
 ## Discover the Stack First
 
 The TDD cycle is universal; the commands are not. Before writing the first test, discover how *this* repository tests, and use its commands for every RED, GREEN, and verification step:
@@ -389,6 +402,9 @@ For JavaScript/TypeScript testing patterns illustrating these principles — Jes
 | "The code is self-explanatory" | Tests ARE the specification. They document what the code should do, not what it does. |
 | "It's just a prototype" | Prototypes become production code. Tests from day one prevent the "test debt" crisis. |
 | "Let me run the tests again just to be extra sure" | After a clean test run, repeating the same command adds nothing unless the code has changed since. Run again after subsequent edits, not as reassurance. |
+| "Keep the code as reference, write tests first" | You'll adapt it. That's testing after. Delete means delete. |
+| "Already spent hours on this, deleting is wasteful" | Sunk cost — that time is already spent either way. Keeping code you can't trust is the waste. |
+| "Tests after achieve the same purpose" | Tests-after answer "what does this do?"; tests-first answer "what should this do?" Tests written after are biased by the code you already wrote. |
 
 ## Red Flags
 

@@ -326,6 +326,24 @@ A changelog is not `git log`. It's the curated, consumer-facing answer to "what 
 
 Write the entry in the same change that makes the change, while the impact is fresh — not reconstructed from commit archaeology at release time. Breaking changes get a migration note and a deprecation window (follow the `deprecation-and-migration` skill); shipping the actual release is the `shipping-and-launch` skill's job — this section is the versioning contract that feeds it.
 
+## Finishing a development branch (from obra/superpowers finishing-a-development-branch)
+
+When implementation is complete and you need to decide how the work integrates. Core sequence: verify tests → confirm the base → present options → execute the choice → clean up.
+
+1. **Verify tests first.** Run the project's FULL test suite on the tree you are about to integrate. If tests fail, report the failures and stop — the menu comes after a green suite. A green run earlier in the session proves the tree it ran on, not this one.
+2. **Confirm the base branch.** The base is whatever this work forked from — usually named in the plan or conversation. If it is not already known, ask: "This branch split from <best guess> — is that correct?" Merging into the wrong base is expensive to undo.
+3. **Present exactly these options and wait.** Integration is Nasser's decision — never merge, push a PR, or release on your own say-so (his standing rules: no merge or release without his explicit word; Solina-Player releases are APK-only and only when he says so).
+   ```
+   Implementation complete. What would you like to do?
+   1. Merge back to <base-branch> locally
+   2. Push and create a Pull Request
+   3. Keep the branch as-is (I'll handle it later)
+   Which option?
+   ```
+   Discarding the work happens only if he explicitly asks for it, and only after he types `discard` to confirm — "yeah, get rid of it" does not count.
+4. **Execute the choice.** Merge locally: merge first, verify tests on the merged result, and only then delete the branch — if the merged result fails, stop, leave branch and work in place, investigate. Push + PR: push, create the PR against the base branch with the repo's template, report the URL, keep the branch — PR feedback gets fixed there. Keep as-is: report that the branch is kept.
+5. **API-only repos (Solina-Files):** the same sequence runs through the GitHub API / `gh` — never a local clone. Merge via the API, delete the remote branch via the API, verify CI on the merged head. Never run git inside a local copy of that repo.
+
 ## Common Rationalizations
 
 | Rationalization | Reality |

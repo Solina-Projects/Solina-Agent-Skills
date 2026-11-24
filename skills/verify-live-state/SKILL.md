@@ -1,6 +1,6 @@
 ---
 name: verify-live-state
-description: "Verify live state before claiming it: run the live check for the exact state first, correct the first reading openly, and report only what was actually checked."
+description: "Verify live state before claiming it: run the live check for the exact state first, correct the first reading openly, and report only what was actually checked. Also the verification-before-completion gate: no completion claim without fresh verification evidence."
 ---
 
 # Verify live state before claiming it
@@ -46,6 +46,34 @@ This skill runs inside Muse's own environment, for Nasser. Where the original in
 - Say what remains untested when a live check could not run and do not claim that state.
 
 - Ask for a live confirmation from the user when the browser session cannot show the identity field or the test result.
+
+## Verification gate for work claims (from obra/superpowers verification-before-completion)
+
+The same evidence-before-claims rule governs code work, not just live state:
+
+```
+NO COMPLETION CLAIMS WITHOUT FRESH VERIFICATION EVIDENCE
+```
+
+Before claiming any status or expressing satisfaction:
+
+1. **IDENTIFY:** what command proves this claim?
+2. **RUN:** execute the FULL command, fresh and complete.
+3. **READ:** the full output — check the exit code, count the failures.
+4. **VERIFY:** does the output confirm the claim? If no, state the actual status with evidence. If yes, state the claim WITH the evidence.
+5. **ONLY THEN:** make the claim. Skipping any step is lying, not verifying.
+
+| Claim | Requires | Not sufficient |
+|-------|----------|----------------|
+| Tests pass | Test command output: 0 failures | A previous run, "should pass" |
+| Linter clean | Linter output: 0 errors | A partial check, extrapolation |
+| Build succeeds | Build command: exit 0 | Linter passing, logs look good |
+| Bug fixed | Test of the original symptom: passes | Code changed, assumed fixed |
+| Regression test works | Red-green cycle verified | Test passes once |
+| Agent completed | Diff shows the changes | Agent reports "success" |
+| Requirements met | Line-by-line checklist | Tests passing |
+
+Red flags — stop: using "should", "probably", "seems to"; expressing satisfaction before verification ("Great!", "Done!"); committing, pushing or creating a PR without verification; trusting an agent's success report; relying on partial verification; thinking "just this once". This applies to exact phrases, paraphrases, synonyms, and any wording implying success without having run verification.
 
 ## Available connectors
 

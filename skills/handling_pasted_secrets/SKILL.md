@@ -1,3 +1,8 @@
+---
+name: handling_pasted_secrets
+description: "Handle secrets the user pastes in chat: treat them as already exposed, never repeat their value, name only where each belongs, and say plainly it must be treated as compromised."
+---
+
 # Handling Pasted Secrets
 
 ## Answer once and stop repeating

@@ -1,6 +1,6 @@
 ---
 name: persian-rtl-design
-description: Persian-first and RTL design rules for Nasser's products (Telegram mini-app, bot UI, apps, sites, artifacts). Use on every build whose UI carries Persian or Arabic-script text: RTL layout, mirroring, Arabic-script typography, mixed fa/en runs, digits, and the pre-delivery RTL checklist.
+description: "Persian-first and RTL design rules for Nasser's products (Telegram mini-app, bot UI, apps, sites, artifacts). Use on every build whose UI carries Persian or Arabic-script text: RTL layout, mirroring, Arabic-script typography, mixed fa/en runs, digits, and the pre-delivery RTL checklist."
 ---
 
 

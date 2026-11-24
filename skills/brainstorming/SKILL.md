@@ -71,6 +71,24 @@ recommended one. Mention the road not taken in one line of the report
 ("went with X because Y; Z is there if you want it") instead of holding a
 vote before the work.
 
+## Ground to cover (to yourself, not as questions)
+
+Before building, be able to answer these to yourself from the request, the project, and memory — never by interrogating him:
+
+- What kind of thing this is, and what makes it special
+- Why now, and what success looks like to him
+- Goals, non-goals, and anti-goals (what would make this a failure even if it technically works)
+- Prior art: what he has seen elsewhere, loved or hated
+- Current state: what exists now, what he has tried
+- The details he cares about
+
+If one of these is unanswered and its answer would change what gets built, that is the one thing worth a question (see Questions above). Everything else is your call — state it in the report.
+
+## Size the work
+
+- A small change: the short understanding above is the design. Build it.
+- A project: write a short design note first (intent and why, goals/non-goals/anti-goals, constraints, the approach picked and why, what is left to the builder) and save it under the project's workspace docs — then build. No approval round; the note is for the record, and his corrections come from the finished work.
+
 ## Spikes
 
 A quick throwaway build is often the cheapest way to learn what he wants —

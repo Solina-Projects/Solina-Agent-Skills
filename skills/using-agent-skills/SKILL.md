@@ -154,6 +154,14 @@ These are the subtle errors that look like productivity but create problems:
 
 4. **When in doubt, start with a spec.** If the task is non-trivial and there's no spec, begin with `spec-driven-development`.
 
+## Superpowers bootstrap (from obra/superpowers using-superpowers)
+
+- **Invoke relevant skills BEFORE any response or action** — including clarifying questions, exploring the codebase, or checking files. If there is even a 1% chance a skill might apply, use it. If it turns out wrong for the situation, you don't have to keep using it — but you don't get to rationalize your way out of checking.
+- **Process skills first.** When multiple skills apply, the process skill sets the approach, then implementation skills carry it out. "Let's build X" → brainstorming first, then implementation skills. "Fix this bug" → debugging-and-error-recovery first, then domain skills. Before entering plan mode without having brainstormed, invoke brainstorming first.
+- **Red flags — you are rationalizing:** "This is just a simple question" (questions are tasks — check for skills). "I need more context first" (the skill check comes BEFORE clarifying questions). "Let me explore the codebase first" (skills tell you HOW to explore). "I remember this skill" (skills evolve — read the current version). "This doesn't need a formal skill" (if a skill exists, use it). "I'll just do this one thing first" (check BEFORE doing anything).
+- **User instructions outrank skills.** Nasser's standing instructions and direct requests take precedence over any skill; skills in turn override default behaviour. Only skip a skill workflow when he has explicitly told you to.
+- **The Superpowers workflow skills in this collection:** brainstorming → planning-and-task-breakdown (writing the plan) → `superpowers-subagent-driven-development` (a fresh subagent per task, review after each) or `incremental-implementation` (inline execution with a ledger) → test-driven-development → code-review-and-quality → git-workflow-and-versioning (finishing a branch) → shipping-and-launch. Verification runs throughout: `verify-live-state` (evidence before claims) and debugging-and-error-recovery whenever something breaks.
+
 ## Lifecycle Sequence
 
 For a complete feature, the typical skill sequence is:

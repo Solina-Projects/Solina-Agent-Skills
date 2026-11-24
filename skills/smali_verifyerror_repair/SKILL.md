@@ -1,3 +1,8 @@
+---
+name: smali_verifyerror_repair
+description: "Repair Android smali VerifyError crashes: read the logcat first, treat it as a type error in the smali, trace the register's wrong type to its branch, and fix it there."
+---
+
 # Smali VerifyError Repair
 
 ## Read the crash first

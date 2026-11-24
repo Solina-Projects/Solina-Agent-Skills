@@ -1,3 +1,8 @@
+---
+name: lunaris-rom-build
+description: Build the Lunaris custom ROM (AOSP 3.13, Android 16) for alioth (POCO F3 / Mi 11X / Redmi K40) from existing device trees, with machine, disk and RAM checks before long steps.
+---
+
 # Lunaris Custom ROM Build
 
 ## Settle the target and machine first

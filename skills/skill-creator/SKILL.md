@@ -499,3 +499,13 @@ Repeating one more time the core loop here for emphasis:
 Please add steps to your TodoList, if you have such a thing, to make sure you don't forget. If you're in Cowork, please specifically put "Create evals JSON and run `eval-viewer/generate_review.py` so human can review test cases" in your TodoList to make sure it happens.
 
 Good luck!
+
+## Superpowers discipline for writing skills (from obra/superpowers writing-skills)
+
+Writing skills IS test-driven development applied to process documentation.
+
+- **Iron law: no skill without a failing test first.** This applies to NEW skills AND EDITS to existing skills. Run the pressure scenario WITHOUT the skill, document the exact baseline behaviour (what the agent did, which rationalizations it used verbatim), then write the minimal skill that addresses those specific violations, then run the same scenario WITH the skill and verify the agent complies. A skill written before testing gets deleted and started over — no exceptions for "simple additions" or "just documentation".
+- **Description rules.** A skill's `description` says only when to use it — triggering conditions and symptoms, starting with "Use when...". It never summarizes the workflow, because an agent that reads a workflow summary follows it instead of reading the skill. Keep the description in third person.
+- **Match the form to the failure.** A discipline failure (the agent knows the rule and violates it under pressure) needs prohibition + a rationalization table + red flags. A shaping failure (the output has the wrong shape) needs a positive recipe or contract stating what the output IS, in order. An omitted required element needs a REQUIRED field in the template, not a prose reminder. Never use nuance clauses ("don't X unless it matters") — they reopen the negotiation; express a real exception as its own conditional on an observable predicate.
+- **One excellent example, not many mediocre ones.** Complete, runnable, well-commented on WHY, from a real scenario. Never implement the same example in five languages.
+- **Stop after each skill.** After writing ANY skill, complete its deployment process (test it, review it) before moving to the next one. Do not create multiple skills in a batch without testing each. Deploying untested skills is deploying untested code.

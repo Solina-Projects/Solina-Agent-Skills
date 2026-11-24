@@ -49,6 +49,21 @@ When anything unexpected happens:
 
 **Don't push past a failing test or broken build to work on the next feature.** Errors compound. A bug in Step 3 that goes unfixed makes Steps 4-6 wrong.
 
+## The Four Phases (from obra/superpowers systematic-debugging)
+
+The triage checklist below is this process in checklist form. The iron law behind it:
+
+```
+NO FIXES WITHOUT ROOT CAUSE INVESTIGATION FIRST
+```
+
+If Phase 1 is not complete, you cannot propose fixes.
+
+- **Phase 1 — Root cause investigation.** Read the error completely (stack traces, line numbers, error codes). Reproduce consistently. Check recent changes. In a multi-component system (CI → build → signing, API → service → database), add diagnostic logging at EACH component boundary first — what goes in, what comes out — run once, see WHERE it breaks, then investigate that component. Trace the data flow backwards: where does the bad value originate, what called this with it — fix at the source, not at the symptom. (For this user's work: check the app's own log or stack trace first and log the real exception instead of swallowing it — never blame the phone, ROM or a system app before reading the log.)
+- **Phase 2 — Pattern analysis.** Find a working example of the same pattern in the codebase and compare: list every difference, however small. Read a reference implementation completely before applying it.
+- **Phase 3 — Hypothesis and testing.** One hypothesis at a time, stated plainly ("I think X is the root cause because Y"). Test it with the smallest possible change, one variable at a time. Didn't work? Form a NEW hypothesis — don't pile more fixes on top. If you don't understand something, say so; don't pretend.
+- **Phase 4 — Implementation.** Failing test first (see test-driven-development), one fix, verify. If the fix doesn't work, stop, count your attempts: fewer than 3, return to Phase 1 with the new information. **3 or more failed fixes means the architecture is wrong, not the fix** — each fix revealing a new problem in a different place is the pattern. Stop and discuss it with Nasser before attempting another fix; do not attempt fix #4 on your own.
+
 ## The Triage Checklist
 
 Work through these steps in order. Do not skip steps.
